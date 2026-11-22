@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚔️ Canlı Arena (Battle Royale) — TikTok LIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="studio-layout">
+    <!-- 9:16 TIKTOK STAGE -->
+    <div class="stage-wrapper">
+      <div class="stage-9x16" id="stage9x16" data-theme="neon">
+        <div class="bg-grid"></div>
+
+        <!-- TOP HUD -->
+        <header class="top-hud">
+          <div class="title-row">
+            <span class="game-pill" id="phasePill">⚔️ CANLI ARENA</span>
+            <span class="round-pill" id="roundPill">RAUND 1</span>
+            <span class="alive-pill" id="alivePill">👥 0 sağ</span>
+          </div>
+          <div class="timer-bar-row">
+            <span class="phase-label" id="phaseLabel">Çatda 1 yaz və qoşul!</span>
+            <span class="timer-num" id="timerNum">16</span>
+          </div>
+        </header>
+
+        <!-- CENTRAL CANVAS ARENA -->
+        <div class="arena-box" id="arenaBox">
+          <canvas id="arenaCanvas"></canvas>
+          <div class="arena-toast hidden" id="arenaToast"></div>
+        </div>
+
+        <!-- EASY NUMBER CONTROLS LEGEND -->
+        <div class="cmd-grid">
+          <div class="cmd-card cmd-1">
+            <span class="cmd-num">1</span>
+            <span class="cmd-txt">⚔️ Qoşul / Hücum</span>
+          </div>
+          <div class="cmd-card cmd-2">
+            <span class="cmd-num">2</span>
+            <span class="cmd-txt">🛡️ Qalxan</span>
+          </div>
+          <div class="cmd-card cmd-3">
+            <span class="cmd-num">3</span>
+            <span class="cmd-txt">💥 Zərbə</span>
+          </div>
+          <div class="cmd-card cmd-4">
+            <span class="cmd-num">4</span>
+            <span class="cmd-txt">🧲 Mərkəz</span>
+          </div>
+        </div>
+
+        <!-- FEED + LEADERBOARD -->
+        <footer class="bottom-hud">
+          <div class="feed-strip" id="feedStrip">
+            <span class="feed-item">❤️ Like at = Böyü & Güclən • 🎁 Hədiyyə = Qızıl Kral!</span>
+          </div>
+          <div class="lb-card">
+            <div class="lb-head">
+              <span>👑 ARENA ÇEMPİONLARI</span>
+              <span class="live-badge" id="liveBadge">● HAZIR</span>
+            </div>
+            <div class="lb-list" id="lbList">
+              <div class="lb-empty">İlk qalibdən sonra taclar yazılacaq</div>
+            </div>
+          </div>
+        </footer>
+
+        <!-- VICTORY OVERLAY -->
+        <div class="victory-overlay hidden" id="victoryOverlay">
+          <div class="victory-card">
+            <div class="v-crown">👑</div>
+            <div class="v-title">ARENA KRALI!</div>
+            <div class="v-winner" id="victoryWinner">—</div>
+            <div class="v-stats" id="victoryStats">+300 xal • +1 Tac</div>
+            <div class="v-next">Növbəti raund açılır...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOST CONTROL PANEL -->
+    <aside class="control-panel" id="controlPanel">
+      <div class="panel-head">
+        <h2>⚔️ Canlı Arena İdarəsi</h2>
+        <p>Rəqəmlə idarə olunan Battle Royale • TikTok LIVE</p>
+        <div class="panel-links">
+          <span class="status-chip" id="connChip">Qoşulur...</span>
+          <a class="obs-btn" href="?overlay=1" target="_blank" rel="noopener">📺 OBS Overlay</a>
+        </div>
+      </div>
+
+      <div class="ctrl-card">
+        <h3>🎮 Raund İdarəsi</h3>
+        <div class="btn-row">
+          <button class="btn primary" id="btnNewRound">▶ Yeni Raund</button>
+          <button class="btn warn" id="btnStartNow">⚡ Döyüşü İndi Başlat</button>
+        </div>
+        <div class="btn-row mt-8">
+          <button class="btn accent" id="btnToggleBots">🤖 Bot Rəqiblər: AÇIQ</button>
+          <button class="btn" id="btnAddBots">+5 Bot Əlavə Et</button>
+        </div>
+        <div class="btn-row mt-8">
+          <button class="btn" id="btnMuteSound">🔊 Səs Açıqdır</button>
+          <button class="btn" id="btnTestSound">🔔 Səs Testi</button>
+        </div>
+      </div>
+
+      <div class="ctrl-card">
+        <h3>🎨 Arena Teması</h3>
+        <div class="theme-grid" id="themeGrid">
+          <button class="theme-btn active" data-theme="neon">💜 Neon</button>
+          <button class="theme-btn" data-theme="gold">👑 Qızıl</button>
+          <button class="theme-btn" data-theme="fire">🔥 Alov</button>
+          <button class="theme-btn" data-theme="cyber">💠 Kiber</button>
+          <button class="theme-btn" data-theme="azerbaijan">🇦🇿 Azərbaycan</button>
+        </div>
+      </div>
+
+      <div class="ctrl-card">
+        <h3>📡 TikTok LIVE Kanal</h3>
+        <div class="input-row">
+          <input type="text" id="tiktokUserInput" value="bakuremixlab" placeholder="istifadəçi adı..." />
+          <button class="btn primary" id="btnConnectTikTok">Qoşul</button>
+          <button class="btn danger" id="btnDisconnectTikTok">Kəs</button>
+        </div>
+        <div class="status-line" id="tiktokStatusText">Status: Bağlantı hazırdır</div>
+      </div>
+
+      <div class="ctrl-card">
+        <h3>🧪 Rəqəmlərlə Test Et</h3>
+        <div class="test-nums">
+          <button class="btn" data-cmd="1">1 • Qoşul/Hücum</button>
+          <button class="btn" data-cmd="2">2 • Qalxan</button>
+          <button class="btn" data-cmd="3">3 • Zərbə</button>
+          <button class="btn" data-cmd="4">4 • Mərkəz</button>
+        </div>
+      </div>
+
+      <div class="ctrl-card">
+        <h3>🔗 TikTok LIVE Studio Linki</h3>
+        <div class="input-row">
+          <input type="text" id="obsUrlInput" readonly value="" />
+          <button class="btn primary" id="btnCopyObs">📋 Kopyala</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
